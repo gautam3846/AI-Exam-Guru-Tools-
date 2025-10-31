@@ -28,17 +28,17 @@ const DoubtSolver: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-slate-800/60 backdrop-blur-lg border border-slate-700 rounded-xl shadow-lg overflow-hidden animate-fade-in">
-      <div className="p-6 sm:p-8">
-        <h2 className="text-2xl sm:text-3xl font-bold text-sky-500 mb-2">Doubt Solver</h2>
-        <p className="text-slate-400 mb-6">Have a question? Ask anything related to your studies and get a clear, concise answer.</p>
+    <div className="max-w-4xl mx-auto bg-white/60 dark:bg-slate-800/60 backdrop-blur-lg border border-slate-200 dark:border-slate-700 rounded-xl shadow-lg overflow-hidden animate-fade-in">
+      <div className="p-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-sky-500 mb-2">Doubt Solver</h2>
+        <p className="text-slate-500 dark:text-slate-400 mb-6">Have a question? Ask anything related to your studies and get a clear, concise answer.</p>
         
         <form onSubmit={handleSubmit}>
           <textarea
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
             placeholder="e.g., Explain Newton's First Law of Motion"
-            className="w-full h-32 p-4 bg-slate-700/80 border border-slate-600 rounded-lg text-slate-200 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition duration-200 resize-none"
+            className="w-full h-32 p-4 bg-slate-100 dark:bg-slate-700/80 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition duration-200 resize-none"
             disabled={isLoading}
           />
           {error && <p className="text-red-500 mt-2 text-sm">{error}</p>}
@@ -54,10 +54,10 @@ const DoubtSolver: React.FC = () => {
         {isLoading && <Loader />}
         
         {answer && (
-          <div className="mt-8 pt-6 border-t border-slate-700">
-            <h3 className="text-xl font-semibold text-slate-50 mb-4">Answer:</h3>
-            <div className="prose prose-invert max-w-none prose-p:text-slate-300 prose-headings:text-sky-500 bg-slate-900/80 p-4 rounded-lg">
-               <pre className="whitespace-pre-wrap font-sans text-slate-200">{answer}</pre>
+          <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
+            <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-50 mb-4">Answer:</h3>
+            <div className="prose dark:prose-invert max-w-none prose-p:text-slate-600 dark:prose-p:text-slate-300 prose-headings:text-sky-500 bg-slate-100 dark:bg-slate-900/80 p-4 rounded-lg">
+               <pre className="whitespace-pre-wrap font-sans text-slate-800 dark:text-slate-200">{answer}</pre>
             </div>
           </div>
         )}

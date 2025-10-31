@@ -4,20 +4,21 @@ import { GuruIcon, TwitterIcon, WhatsAppIcon, TelegramIcon, InstagramIcon, Faceb
 
 interface FooterProps {
     onNavigateToPolicy: (page: PolicyPageType) => void;
+    onNavigateToPricing: () => void;
 }
 
 const FooterLink: React.FC<{ page: PolicyPageType; onClick: (page: PolicyPageType) => void; children: React.ReactNode }> = ({ page, onClick, children }) => (
     <li>
-        <button onClick={() => onClick(page)} className="text-slate-400 hover:text-sky-400 transition-colors duration-200">
+        <button onClick={() => onClick(page)} className="text-slate-600 dark:text-slate-400 hover:text-sky-400 transition-colors duration-200">
             {children}
         </button>
     </li>
 );
 
-const Footer: React.FC<FooterProps> = ({ onNavigateToPolicy }) => {
+const Footer: React.FC<FooterProps> = ({ onNavigateToPolicy, onNavigateToPricing }) => {
     return (
-        <footer className="w-full bg-slate-900/60 backdrop-blur-lg border-t border-slate-700">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <footer className="w-full bg-white/60 dark:bg-slate-900/60 backdrop-blur-lg border-t border-slate-200 dark:border-slate-700">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
                 <div className="flex justify-center items-center mb-8">
                     <div className="flex items-center space-x-6">
@@ -44,7 +45,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigateToPolicy }) => {
                     <div className="md:col-span-4 lg:col-span-6 flex flex-col items-center md:items-start">
                         <div className="flex items-center gap-2 mb-3">
                             <GuruIcon className="h-8 w-8 text-sky-500" />
-                            <span className="text-xl font-bold text-slate-50">AI Exam Guru</span>
+                            <span className="text-xl font-bold text-slate-900 dark:text-slate-50">AI Exam Guru</span>
                         </div>
                         <p className="text-slate-500 text-sm text-center md:text-left max-w-xs">
                             Your personal AI study partner. Ace your exams with powerful tools for learning and preparation.
@@ -54,15 +55,20 @@ const Footer: React.FC<FooterProps> = ({ onNavigateToPolicy }) => {
                     {/* Column 2 & 3: Links */}
                     <div className="md:col-span-8 lg:col-span-6 grid grid-cols-2 sm:grid-cols-2 gap-8 text-center sm:text-left">
                         <div className="sm:col-start-2">
-                            <h3 className="font-semibold text-slate-50 mb-4 tracking-wider uppercase text-sm">About</h3>
+                            <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-4 tracking-wider uppercase text-sm">About</h3>
                             <ul className="space-y-3">
                                 <FooterLink page="about" onClick={onNavigateToPolicy}>About Us</FooterLink>
+                                <li>
+                                    <button onClick={onNavigateToPricing} className="text-slate-600 dark:text-slate-400 hover:text-sky-400 transition-colors duration-200">
+                                        Pricing
+                                    </button>
+                                </li>
                                 <FooterLink page="contact" onClick={onNavigateToPolicy}>Contact Us</FooterLink>
                                 <FooterLink page="support" onClick={onNavigateToPolicy}>Support</FooterLink>
                             </ul>
                         </div>
                         <div>
-                            <h3 className="font-semibold text-slate-50 mb-4 tracking-wider uppercase text-sm">Legal</h3>
+                            <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-4 tracking-wider uppercase text-sm">Legal</h3>
                             <ul className="space-y-3">
                                 <FooterLink page="terms" onClick={onNavigateToPolicy}>Terms of Service</FooterLink>
                                 <FooterLink page="privacy" onClick={onNavigateToPolicy}>Privacy Policy</FooterLink>
@@ -73,7 +79,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigateToPolicy }) => {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="mt-8 pt-6 border-t border-slate-700 text-center text-sm text-slate-500">
+                <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700 text-center text-sm text-slate-500">
                     <p>&copy; {new Date().getFullYear()} AI Exam Guru. All rights reserved.</p>
                 </div>
             </div>

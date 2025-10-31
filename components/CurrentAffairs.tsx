@@ -27,12 +27,12 @@ const CurrentAffairs: React.FC = () => {
   }, []);
 
   return (
-    <div className="max-w-4xl mx-auto bg-slate-800/60 backdrop-blur-lg border border-slate-700 rounded-xl shadow-lg overflow-hidden animate-fade-in">
-      <div className="p-6 sm:p-8">
+    <div className="max-w-4xl mx-auto bg-white/60 dark:bg-slate-800/60 backdrop-blur-lg border border-slate-200 dark:border-slate-700 rounded-xl shadow-lg overflow-hidden animate-fade-in">
+      <div className="p-6">
         <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-6">
             <div className="mb-4 sm:mb-0">
-                <h2 className="text-2xl sm:text-3xl font-bold text-sky-500">Daily Current Affairs</h2>
-                <p className="text-slate-400">Your daily digest of the latest news, powered by AI and Google Search.</p>
+                <h2 className="text-xl sm:text-2xl font-bold text-sky-500">Daily Current Affairs</h2>
+                <p className="text-slate-500 dark:text-slate-400">Your daily digest of the latest news, powered by AI and Google Search.</p>
             </div>
             <button
                 onClick={fetchAffairs}
@@ -49,26 +49,26 @@ const CurrentAffairs: React.FC = () => {
         {data && !isLoading && (
           <div className="space-y-8">
             <div>
-              <h3 className="text-xl font-semibold text-slate-50 mb-4 border-b-2 border-sky-500 pb-2">Top Headlines</h3>
-              <div className="prose prose-invert max-w-none prose-p:text-slate-300 prose-headings:text-sky-500 bg-slate-900/80 p-4 rounded-lg">
-                <pre className="whitespace-pre-wrap font-sans text-slate-200">{data.content}</pre>
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-50 mb-4 border-b-2 border-sky-500 pb-2">Top Headlines</h3>
+              <div className="prose dark:prose-invert max-w-none prose-p:text-slate-600 dark:prose-p:text-slate-300 prose-headings:text-sky-500 bg-slate-100 dark:bg-slate-900/80 p-4 rounded-lg">
+                <pre className="whitespace-pre-wrap font-sans text-slate-800 dark:text-slate-200">{data.content}</pre>
               </div>
             </div>
 
             {data.sources.length > 0 && (
               <div>
-                <h3 className="text-xl font-semibold text-slate-50 mb-4 border-b-2 border-sky-500 pb-2">Sources</h3>
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-50 mb-4 border-b-2 border-sky-500 pb-2">Sources</h3>
                 <ul className="space-y-2">
                   {data.sources.map((source, index) => (
-                    <li key={index} className="bg-slate-700/80 p-3 rounded-lg hover:bg-slate-600/80 transition duration-200">
+                    <li key={index} className="bg-slate-200 dark:bg-slate-700/80 p-3 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600/80 transition duration-200">
                       <a 
                         href={source.uri} 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        className="text-sky-400 hover:text-sky-300 text-sm"
+                        className="text-sky-500 dark:text-sky-400 hover:text-sky-600 dark:hover:text-sky-300 text-sm"
                       >
                         {source.title}
-                        <span className="block text-xs text-slate-400 truncate">{source.uri}</span>
+                        <span className="block text-xs text-slate-500 dark:text-slate-400 truncate">{source.uri}</span>
                       </a>
                     </li>
                   ))}

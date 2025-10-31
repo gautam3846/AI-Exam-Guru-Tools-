@@ -14,8 +14,8 @@ const ToolNavButton: React.FC<{
   onClick: () => void;
 }> = ({ label, icon, isActive, onClick }) => {
   const baseClasses = "flex items-center space-x-2 px-3 sm:px-4 py-3 text-sm sm:text-base font-medium transition-colors duration-200 border-b-2";
-  const activeClasses = "border-sky-500 text-sky-400";
-  const inactiveClasses = "border-transparent text-slate-400 hover:border-slate-600 hover:text-slate-200";
+  const activeClasses = "border-sky-500 text-sky-500 dark:text-sky-400";
+  const inactiveClasses = "border-transparent text-slate-500 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-slate-200";
   return (
     <button onClick={onClick} className={`${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}>
       {icon}
@@ -26,9 +26,12 @@ const ToolNavButton: React.FC<{
 
 interface DashboardProps {
     onNavigateToPolicy: (page: PolicyPageType) => void;
+    onLogout: () => void;
+    onNavigateToPricing: () => void;
+    onNavigateToAccount: () => void;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ onNavigateToPolicy }) => {
+const Dashboard: React.FC<DashboardProps> = ({ onNavigateToPolicy, onLogout, onNavigateToPricing, onNavigateToAccount }) => {
   const [activeTool, setActiveTool] = useState<Tool>(Tool.DoubtSolver);
 
   const renderTool = () => {
@@ -45,9 +48,15 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigateToPolicy }) => {
 
   return (
     <div className="min-h-screen flex flex-col animate-fade-in">
-      <Header />
+      <Header 
+        onLogout={onLogout} 
+        onNavigateToPolicy={onNavigateToPolicy}
+        onNavigateToPricing={onNavigateToPricing}
+        onNavigateToAccount={onNavigateToAccount}
+        onNavigateToTools={() => {}} // Already on tools, so this is a no-op
+      />
       
-      <div className="bg-slate-900/60 backdrop-blur-lg border-b border-slate-700 shadow-sm sticky top-16 z-10">
+      <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-lg border-b border-slate-200 dark:border-slate-700 shadow-sm sticky top-16 z-10">
         <nav className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-center space-x-2 sm:space-x-8">
             <ToolNavButton
               label="Doubt Solver"
@@ -70,11 +79,11 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigateToPolicy }) => {
         </nav>
       </div>
 
-      <main className="flex-grow container mx-auto p-4 sm:p-6 lg:p-8">
+      <main className="flex-grow container mx-auto p-4 sm:p-6">
         {renderTool()}
       </main>
       
-      <Footer onNavigateToPolicy={onNavigateToPolicy} />
+      <Footer onNavigateToPolicy={onNavigateToPolicy} onNavigateToPricing={onNavigateToPricing} />
     </div>
   );
 };

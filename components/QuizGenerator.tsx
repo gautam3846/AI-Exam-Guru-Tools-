@@ -76,22 +76,22 @@ const QuizGenerator: React.FC = () => {
       case 'generating':
         return (
           <div className="text-center p-8">
-            <h3 className="text-xl text-slate-400 mb-4">Generating your quiz on "{topic}"...</h3>
+            <h3 className="text-xl text-slate-500 dark:text-slate-400 mb-4">Generating your quiz on "{topic}"...</h3>
             <Loader />
           </div>
         );
       case 'active':
         const currentQuestion = questions[currentQuestionIndex];
         return (
-          <div className="p-6 sm:p-8 animate-fade-in">
-            <div className="mb-4 text-slate-400">Question {currentQuestionIndex + 1} of {questions.length}</div>
-            <h3 className="text-xl sm:text-2xl font-semibold mb-6 text-slate-50">{currentQuestion.question}</h3>
+          <div className="p-6 animate-fade-in">
+            <div className="mb-4 text-slate-500 dark:text-slate-400">Question {currentQuestionIndex + 1} of {questions.length}</div>
+            <h3 className="text-lg sm:text-xl font-semibold mb-6 text-slate-900 dark:text-slate-50">{currentQuestion.question}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {currentQuestion.options.map((option, index) => (
                 <button
                   key={index}
                   onClick={() => handleAnswer(option)}
-                  className={`p-4 rounded-lg text-left transition duration-200 border-2 ${userAnswers[currentQuestionIndex] === option ? 'bg-sky-600 border-sky-600 text-white' : 'bg-slate-700/80 border-slate-600 hover:bg-slate-600/80 text-slate-200'}`}
+                  className={`p-4 rounded-lg text-left transition duration-200 border-2 ${userAnswers[currentQuestionIndex] === option ? 'bg-sky-600 border-sky-600 text-white' : 'bg-slate-100 dark:bg-slate-700/80 border-slate-300 dark:border-slate-600 hover:bg-slate-200 dark:hover:bg-slate-600/80 text-slate-800 dark:text-slate-200'}`}
                 >
                   {option}
                 </button>
@@ -108,10 +108,10 @@ const QuizGenerator: React.FC = () => {
         );
       case 'finished':
         return (
-          <div className="p-6 sm:p-8 text-center animate-fade-in">
-            <h3 className="text-3xl font-bold text-sky-500 mb-4">Quiz Complete!</h3>
-            <p className="text-xl text-slate-50 mb-2">Your Score:</p>
-            <p className="text-5xl font-bold text-sky-500 mb-8">{score} / {questions.length}</p>
+          <div className="p-6 text-center animate-fade-in">
+            <h3 className="text-2xl font-bold text-sky-500 mb-4">Quiz Complete!</h3>
+            <p className="text-lg text-slate-900 dark:text-slate-50 mb-2">Your Score:</p>
+            <p className="text-4xl font-bold text-sky-500 mb-8">{score} / {questions.length}</p>
             <button
               onClick={resetQuiz}
               className="px-6 py-3 bg-sky-600 text-white font-semibold rounded-lg hover:bg-sky-700 transition duration-200"
@@ -123,28 +123,28 @@ const QuizGenerator: React.FC = () => {
       case 'config':
       default:
         return (
-          <div className="p-6 sm:p-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-sky-500 mb-2">Quiz Generator</h2>
-            <p className="text-slate-400 mb-6">Test your knowledge. Enter a topic to generate a multiple-choice quiz.</p>
+          <div className="p-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-sky-500 mb-2">Quiz Generator</h2>
+            <p className="text-slate-500 dark:text-slate-400 mb-6">Test your knowledge. Enter a topic to generate a multiple-choice quiz.</p>
             <div className="space-y-4">
               <div>
-                <label htmlFor="topic" className="block text-sm font-medium text-slate-300 mb-1">Topic</label>
+                <label htmlFor="topic" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Topic</label>
                 <input
                   id="topic"
                   type="text"
                   value={topic}
                   onChange={(e) => setTopic(e.target.value)}
                   placeholder="e.g., The Solar System"
-                  className="w-full p-3 bg-slate-700/80 border border-slate-600 rounded-lg text-slate-200 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition duration-200"
+                  className="w-full p-3 bg-slate-100 dark:bg-slate-700/80 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition duration-200"
                 />
               </div>
               <div>
-                <label htmlFor="numQuestions" className="block text-sm font-medium text-slate-300 mb-1">Number of Questions</label>
+                <label htmlFor="numQuestions" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Number of Questions</label>
                 <select 
                     id="numQuestions"
                     value={numQuestions}
                     onChange={(e) => setNumQuestions(Number(e.target.value))}
-                    className="w-full p-3 bg-slate-700/80 border border-slate-600 rounded-lg text-slate-200 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition duration-200"
+                    className="w-full p-3 bg-slate-100 dark:bg-slate-700/80 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition duration-200"
                 >
                     <option value="5">5</option>
                     <option value="10">10</option>
@@ -165,7 +165,7 @@ const QuizGenerator: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-slate-800/60 backdrop-blur-lg border border-slate-700 rounded-xl shadow-lg overflow-hidden">
+    <div className="max-w-4xl mx-auto bg-white/60 dark:bg-slate-800/60 backdrop-blur-lg border border-slate-200 dark:border-slate-700 rounded-xl shadow-lg overflow-hidden">
       {renderContent()}
     </div>
   );
