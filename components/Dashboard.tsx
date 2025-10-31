@@ -32,59 +32,73 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ onNavigateToPolicy, onLogout, onNavigateToPricing, onNavigateToAccount }) => {
-  const [activeTool, setActiveTool] = useState<Tool>(Tool.DoubtSolver);
+  // Default to a non-fullscreen tool
+  const [activeTool, setActiveTool] = useState<Tool>(Tool.QuizGenerator);
 
-  const renderTool = () => {
+  const renderToolInPage = () => {
     switch (activeTool) {
       case Tool.QuizGenerator:
         return <QuizGenerator />;
       case Tool.CurrentAffairs:
         return <CurrentAffairs />;
+      // DoubtSolver is rendered as an overlay, so return a placeholder or nothing for the main view.
       case Tool.DoubtSolver:
       default:
-        return <DoubtSolver />;
+        return (
+            <div className="text-center p-8">
+                <h2 className="text-2xl font-semibold text-slate-700 dark:text-slate-300">Welcome to your Dashboard</h2>
+                <p className="text-slate-500 dark:text-slate-400 mt-2">Select a tool from the navigation above to get started.</p>
+            </div>
+        );
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col animate-fade-in">
-      <Header 
-        onLogout={onLogout} 
-        onNavigateToPolicy={onNavigateToPolicy}
-        onNavigateToPricing={onNavigateToPricing}
-        onNavigateToAccount={onNavigateToAccount}
-        onNavigateToTools={() => {}} // Already on tools, so this is a no-op
-      />
-      
-      <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-lg border-b border-slate-200 dark:border-slate-700 shadow-sm sticky top-16 z-10">
-        <nav className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-center space-x-2 sm:space-x-8">
-            <ToolNavButton
-              label="Doubt Solver"
-              icon={<QuestionIcon className="h-5 w-5" />}
-              isActive={activeTool === Tool.DoubtSolver}
-              onClick={() => setActiveTool(Tool.DoubtSolver)}
-            />
-            <ToolNavButton
-              label="Quiz Generator"
-              icon={<QuizIcon className="h-5 w-5" />}
-              isActive={activeTool === Tool.QuizGenerator}
-              onClick={() => setActiveTool(Tool.QuizGenerator)}
-            />
-            <ToolNavButton
-              label="Current Affairs"
-              icon={<NewsIcon className="h-5 w-5" />}
-              isActive={activeTool === Tool.CurrentAffairs}
-              onClick={() => setActiveTool(Tool.CurrentAffairs)}
-            />
-        </nav>
-      </div>
+    <>
+      {/* Conditionally render the full-screen solver on top of everything */}
+      {activeTool === Tool.DoubtSolver && 
+        <DoubtSolver onClose={() => setActiveTool(Tool.QuizGenerator)} />
+      }
 
-      <main className="flex-grow container mx-auto p-4 sm:p-6">
-        {renderTool()}
-      </main>
-      
-      <Footer onNavigateToPolicy={onNavigateToPolicy} onNavigateToPricing={onNavigateToPricing} />
-    </div>
+      <div className="min-h-screen flex flex-col animate-fade-in">
+        <Header 
+          onLogout={onLogout} 
+          onNavigateToPolicy={onNavigateToPolicy}
+          onNavigateToPricing={onNavigateToPricing}
+          onNavigateToAccount={onNavigateToAccount}
+          onNavigateToTools={() => setActiveTool(Tool.QuizGenerator)}
+        />
+        
+        <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-lg border-b border-slate-200 dark:border-slate-700 shadow-sm sticky top-16 z-10">
+          <nav className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-center space-x-2 sm:space-x-8">
+              <ToolNavButton
+                label="Doubt Solver"
+                icon={<QuestionIcon className="h-5 w-5" />}
+                isActive={activeTool === Tool.DoubtSolver}
+                onClick={() => setActiveTool(Tool.DoubtSolver)}
+              />
+              <ToolNavButton
+                label="Quiz Generator"
+                icon={<QuizIcon className="h-5 w-5" />}
+                isActive={activeTool === Tool.QuizGenerator}
+                onClick={() => setActiveTool(Tool.QuizGenerator)}
+              />
+              <ToolNavButton
+                label="Current Affairs"
+                icon={<NewsIcon className="h-5 w-5" />}
+                isActive={activeTool === Tool.CurrentAffairs}
+                onClick={() => setActiveTool(Tool.CurrentAffairs)}
+              />
+          </nav>
+        </div>
+
+        <main className="flex-grow container mx-auto p-4 sm:p-6">
+          {renderToolInPage()}
+        </main>
+        
+        <Footer onNavigateToPolicy={onNavigateToPolicy} onNavigateToPricing={onNavigateToPricing} />
+      </div>
+    </>
   );
 };
 

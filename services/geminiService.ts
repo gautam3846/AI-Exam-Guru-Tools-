@@ -1,16 +1,34 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
 import { QuizQuestion, CurrentAffairsData, GroundingSource } from '../types';
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
 
-export const solveDoubt = async (prompt: string): Promise<string> => {
+interface ImagePart {
+  mimeType: string;
+  data: string;
+}
+
+export const solveDoubt = async (prompt: string, image?: ImagePart): Promise<string> => {
   try {
+    const model = 'gemini-2.5-flash';
+    let contents: any = prompt;
+
+    if (image) {
+      contents = {
+        parts: [
+          { text: prompt },
+          { inlineData: { mimeType: image.mimeType, data: image.data } }
+        ]
+      };
+    }
+
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: prompt,
+      model,
+      contents,
       config: {
-        systemInstruction: 'You are an expert tutor for competitive exams. Explain the concept clearly, concisely, and accurately. Use markdown for formatting like headings, lists, and bold text.',
+        systemInstruction: 'You are an expert tutor for competitive exams. Explain the concept clearly, concisely, and accurately. If an image is provided, analyze it as part of the question. Use markdown for formatting like headings, lists, and bold text.',
+        // Request to the backend to limit the AI's response length to a maximum of 4000 tokens.
+        maxOutputTokens: 4000,
       }
     });
     return response.text;
